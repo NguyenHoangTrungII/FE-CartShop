@@ -3,6 +3,7 @@ import { timeoutPromise } from "../../utils/Tools";
 export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
 export const PRODUCT_LOADING = "PRODUCT_LOADING";
 export const PRODUCT_FAILURE = "PRODUCT_FAILURE";
+export const SET_STATUS = "SET_STATUS";
 
 export const getAllProduct = () => {
   return async (dispatch) => {
@@ -31,6 +32,23 @@ export const getAllProduct = () => {
       dispatch({
         type: FETCH_PRODUCTS,
         products: resData,
+      });
+    } catch (err) {
+      throw err;
+    }
+  };
+};
+
+export const setStatusProduct = (id) => {
+  return async (dispatch) => {
+    dispatch({
+      type: PRODUCT_LOADING,
+    });
+
+    try {
+      dispatch({
+        type: SET_STATUS,
+        id: id,
       });
     } catch (err) {
       throw err;

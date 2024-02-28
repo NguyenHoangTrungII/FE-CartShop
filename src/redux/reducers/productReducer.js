@@ -7,6 +7,7 @@ import {
   FETCH_PRODUCTBYNAME,
   FETCH_PRODUCTSBYID,
   FETCH_PRODUCTFILTER,
+  SET_STATUS,
 } from "../actions/productAction";
 
 const initialState = {
@@ -47,6 +48,19 @@ export const productReducer = (state = initialState, action) => {
         products: action.products,
         isLoading: false,
       };
+    case SET_STATUS:
+      const updatedProducts = state.products.map((product) => {
+        if (product._id === action.id) {
+          return { ...product, inCart: false };
+        }
+        return product;
+      });
+      return {
+        ...state,
+        products: updatedProducts,
+        isLoading: false,
+      };
+
     default:
       return state;
   }

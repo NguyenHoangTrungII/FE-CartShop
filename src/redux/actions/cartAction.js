@@ -1,5 +1,6 @@
 import { API_URL } from "../../utils/Config";
 import { timeoutPromise } from "../../utils/Tools";
+import { setStatusProduct } from "./productAction";
 export const CART_LOADING = "CART_LOADING";
 export const CART_FAILURE = "CART_FAILURE";
 export const FETCH_CART = "FETCH_CART";
@@ -45,21 +46,18 @@ export const addToCart = (product) => {
     });
 
     try {
-      const response = await timeoutPromise(
-        fetch(`${API_URL}/product/setStatus`, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=utf-8 ",
-          },
-          body: {
-            _id: product._id,
-            status: true,
-          },
-          method: "GET",
-        })
-      );
+      fetch(`${API_URL}/product/setStatus`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=utf-8 ",
+        },
+        body: JSON.stringify({
+          _id: product._id,
+          status: true,
+        }),
+        method: "PATCH",
+      });
 
-      const resData = await response.json();
       let cartItems = getState().cart.cartItems;
       if (!cartItems) {
         const storedCartItems = localStorage.getItem("cartItems");
@@ -73,7 +71,6 @@ export const addToCart = (product) => {
       let existingCartItem = cartItems.find((item) => item._id === product._id);
 
       if (existingCartItem) {
-        existingCartItem.quantity += 1;
       } else {
         let newCartItem = { ...product, quantity: 1 };
         cartItems.push(newCartItem);
@@ -114,16 +111,22 @@ export const removeFromCart = (itemId) => {
             _id: itemId,
             status: false,
           }),
-          method: "GET",
+          method: "PATCH",
         })
       );
-
       if (!response.ok) {
         dispatch({
           type: CART_FAILURE,
         });
         throw new Error("Something went wrong!, can't get your carts");
       }
+
+      if (!response.ok) {
+        dispatch({ type: CART_FAILURE });
+        throw new Error("Something went wrong!");
+      }
+
+      dispatch(setStatusProduct(itemId));
 
       let cartItems = getState().cart.cartItems;
       if (!cartItems) {

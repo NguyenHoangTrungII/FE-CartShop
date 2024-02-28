@@ -3,40 +3,20 @@ import {
   ADD_CART,
   FETCH_CART,
   REMOVE_FROM_CART,
-  // DES_CART_QUANTITY,
-  RESET_CART,
   CART_LOADING,
   CART_FAILURE,
-  MINUS_QTY_ITEM,
-  ADD_QTY_ITEM,
   UPDATE_CART,
 } from "../actions/cartAction";
-// import { LOGOUT } from '../auth/authActions';
 
-const emptyCart = {
-  items: [],
-};
 const initialState = {
   cartItems: [],
   isLoading: false,
 };
 
-// const findIndex = (cartList = [], id) => {
-
-//     const index = cartList.findIndex((cart) => {
-//         return cart.product.id === id;
-//     });
-//     return index;
-// };
 const findIndex = (cartList = [], id) => {
   let foundIndex = -1;
 
-  // console.log(cartList);
-  // console.log(id);
   cartList.map((cart, index) => {
-    console.log(cart._id);
-    console.log(id);
-
     if (cart._id === id) {
       foundIndex = index;
     }
@@ -59,8 +39,6 @@ export const cartReducer = (state = initialState, action) => {
         isLoading: false,
       };
     case FETCH_CART:
-      console.log(action);
-
       return {
         ...state,
         cartItems: [...action.carts],
@@ -75,17 +53,12 @@ export const cartReducer = (state = initialState, action) => {
       if (cartList.length !== 0) {
         const index = findIndex(cartList, id);
 
-        console.log(index);
         if (index >= 0) {
           cartList[index].quantity = cartList[index].quantity + 1;
-          console.log(cartList[index].quantity);
         } else {
-          // const newItem = new Cart(action.cartItems, 1);
           cartList.push(action.cartItems);
-          console.log(cartList);
         }
       } else {
-        // const newItem = new Cart(action.cartItems, 1);
         cartList.push(action.cartItems);
       }
 
