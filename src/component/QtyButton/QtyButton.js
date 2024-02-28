@@ -13,7 +13,7 @@ function QtyButton({
   product = [],
   isQuantity = false,
 }) {
-  const [qty, setqty] = useState(product.quantity);
+  const [qty, setqty] = useState(1);
   const dispatch = useDispatch();
 
   const handleAddQty = () => {
