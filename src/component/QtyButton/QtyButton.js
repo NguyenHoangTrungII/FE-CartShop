@@ -31,19 +31,18 @@ function QtyButton({
 
   const handleMinsQty = () => {
     const updatedQty = qty - 1;
-    if (qty >= 1) {
+    if (qty > 1) {
       if (!isQuantity) {
         setqty((prevQty) => prevQty - 1);
         dispatch(updateQuantity(product._id, updatedQty, qty));
-      } else if (qty === 0) {
-        removeItem(product._id);
       } else {
         setqty((prevQty) => prevQty - 1);
       }
+    } else if (qty === 1) {
+      console.log("click");
+      removeItem(product._id);
     }
   };
-
-  console.log(qty);
 
   return (
     <div className={cx("wrapper", className)}>

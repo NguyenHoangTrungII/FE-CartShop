@@ -37,7 +37,7 @@ function CartItem({ itemData }) {
             <QtyButton
               product={itemData}
               updateQuantity={updateQuantity}
-              removeItem={fetching}
+              removeItem={() => handleRemove(itemData._id)}
             />
           </div>
           <div

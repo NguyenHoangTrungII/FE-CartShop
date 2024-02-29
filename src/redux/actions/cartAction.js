@@ -140,8 +140,6 @@ export const removeFromCart = (itemId) => {
 
       dispatch(setStatusProduct(itemId, false));
 
-      console.log(getState().store.products);
-
       let cartItems = getState().cart.cartItems;
       if (!cartItems) {
         const storedCartItems = localStorage.getItem("cartItems");

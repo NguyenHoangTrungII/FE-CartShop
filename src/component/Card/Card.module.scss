@@ -1,5 +1,5 @@
 .wrapper{
-    background-color: #fff;
+    background-color: var(--white);
     box-sizing: border-box;
     width: 360px;
     height: 600px;
@@ -16,7 +16,7 @@
         width: 300px;
         height: 300px;
         border-radius: 100%;
-        background-color: #f6c90e;
+        background-color: var(--yellow);
         top: -20%;
         left: -50%;
         z-index: 0;
