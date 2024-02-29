@@ -54,7 +54,7 @@ export const cartReducer = (state = initialState, action) => {
         const index = findIndex(cartList, id);
 
         if (index >= 0) {
-          cartList[index].quantity = cartList[index].quantity + 1;
+          //cartList[index].quantity = cartList[index].quantity + 1;
         } else {
           cartList.push(action.cartItems);
         }

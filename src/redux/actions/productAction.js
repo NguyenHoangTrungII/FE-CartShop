@@ -39,7 +39,7 @@ export const getAllProduct = () => {
   };
 };
 
-export const setStatusProduct = (id) => {
+export const setStatusProduct = (id, status) => {
   return async (dispatch) => {
     dispatch({
       type: PRODUCT_LOADING,
@@ -48,7 +48,8 @@ export const setStatusProduct = (id) => {
     try {
       dispatch({
         type: SET_STATUS,
-        id: id,
+        id,
+        status,
       });
     } catch (err) {
       throw err;

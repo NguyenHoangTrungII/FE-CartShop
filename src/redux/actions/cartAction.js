@@ -46,17 +46,25 @@ export const addToCart = (product) => {
     });
 
     try {
-      fetch(`${API_URL}/product/setStatus`, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json;charset=utf-8 ",
-        },
-        body: JSON.stringify({
-          _id: product._id,
-          status: true,
-        }),
-        method: "PATCH",
-      });
+      const response = await timeoutPromise(
+        fetch(`${API_URL}/product/setStatus`, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json;charset=utf-8 ",
+          },
+          body: JSON.stringify({
+            _id: product._id,
+            status: true,
+          }),
+          method: "PATCH",
+        })
+      );
+      if (!response.ok) {
+        dispatch({
+          type: CART_FAILURE,
+        });
+        throw new Error("Something went wrong!, can't get your carts");
+      }
 
       let cartItems = getState().cart.cartItems;
       if (!cartItems) {
@@ -70,19 +78,23 @@ export const addToCart = (product) => {
 
       let existingCartItem = cartItems.find((item) => item._id === product._id);
 
-      if (existingCartItem) {
-      } else {
-        let newCartItem = { ...product, quantity: 1 };
+      if (!existingCartItem) {
+        let newCartItem = { ...product, quantity: 1, inCart: true };
+        console.log(newCartItem);
+        console.log({ ...product, quantity: 1 });
         cartItems.push(newCartItem);
         existingCartItem = newCartItem;
+      } else {
       }
 
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
 
-      console.log(existingCartItem);
+      dispatch(setStatusProduct(product._id, true));
+
+      console.log(getState().store.products);
 
       dispatch({
-        type: "ADD_CART",
+        type: ADD_CART,
         cartItems: existingCartItem,
       });
     } catch (err) {
@@ -126,7 +138,9 @@ export const removeFromCart = (itemId) => {
         throw new Error("Something went wrong!");
       }
 
-      dispatch(setStatusProduct(itemId));
+      dispatch(setStatusProduct(itemId, false));
+
+      console.log(getState().store.products);
 
       let cartItems = getState().cart.cartItems;
       if (!cartItems) {
@@ -143,7 +157,7 @@ export const removeFromCart = (itemId) => {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
 
       dispatch({
-        type: "REMOVE_FROM_CART",
+        type: REMOVE_FROM_CART,
         itemId,
       });
     } catch (err) {

@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 
 import { useDispatch } from "react-redux";
 import styles from "./QtyButton.module.scss";
+import { removeFromCart } from "../../redux/actions/cartAction";
 
 const cx = classNames.bind(styles);
 
@@ -12,6 +13,7 @@ function QtyButton({
   updateQuantity,
   product = [],
   isQuantity = false,
+  removeItem,
 }) {
   const [qty, setqty] = useState(1);
   const dispatch = useDispatch();
@@ -29,10 +31,12 @@ function QtyButton({
 
   const handleMinsQty = () => {
     const updatedQty = qty - 1;
-    if (qty >= 2) {
+    if (qty >= 1) {
       if (!isQuantity) {
         setqty((prevQty) => prevQty - 1);
         dispatch(updateQuantity(product._id, updatedQty, qty));
+      } else if (qty === 0) {
+        removeItem(product._id);
       } else {
         setqty((prevQty) => prevQty - 1);
       }

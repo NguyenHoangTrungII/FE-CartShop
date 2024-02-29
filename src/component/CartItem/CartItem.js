@@ -12,16 +12,16 @@ function CartItem({ itemData }) {
     backgroundColor: itemData.color || "rgb(212, 215, 214)",
   };
 
-  const fetching = async () => {
+  const fetching = async (id) => {
     try {
-      await dispatch(removeFromCart(itemData._id));
+      await dispatch(removeFromCart(id));
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleRemove = () => {
-    fetching();
+  const handleRemove = (id) => {
+    fetching(id);
   };
 
   return (
@@ -34,9 +34,16 @@ function CartItem({ itemData }) {
         <label className={cx("item-price")}>${itemData.price}</label>
         <div className={cx("item-bottom")}>
           <div className={cx("qty-button")}>
-            <QtyButton product={itemData} updateQuantity={updateQuantity} />
+            <QtyButton
+              product={itemData}
+              updateQuantity={updateQuantity}
+              removeItem={fetching}
+            />
           </div>
-          <div className={cx("item-trash")} onClick={() => handleRemove()}>
+          <div
+            className={cx("item-trash")}
+            onClick={() => handleRemove(itemData._id)}
+          >
             <img src={require("../../assets/icons/trash.png")} />
           </div>
         </div>

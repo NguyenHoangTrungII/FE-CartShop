@@ -5,7 +5,7 @@ import CartItem from "../CartItem/CartItem";
 
 const cx = classNames.bind(styles);
 
-function Card({ name, isCart = false, data = [] }) {
+function Card({ name, isCart = false, data = [], inCart = false }) {
   const calculateTotalPrice = () => {
     let totalPrice = 0;
     data.forEach((item) => {
@@ -32,12 +32,14 @@ function Card({ name, isCart = false, data = [] }) {
       {/* Body */}
       <div className={cx("card_Body")}>
         {data.length === 0
-          ? "Your cart is empty"
+          ? isCart
+            ? "Your cart is empty"
+            : " "
           : data.map((item, index) =>
               isCart ? (
                 <CartItem key={index} itemData={item} />
               ) : (
-                <ProductCard key={index} itemData={item} />
+                <ProductCard key={index} itemData={item} inCart={item.inCart} />
               )
             )}
       </div>

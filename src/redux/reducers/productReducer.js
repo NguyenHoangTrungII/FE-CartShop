@@ -51,13 +51,14 @@ export const productReducer = (state = initialState, action) => {
     case SET_STATUS:
       const updatedProducts = state.products.map((product) => {
         if (product._id === action.id) {
-          return { ...product, inCart: false };
+          return { ...product, inCart: action.status };
         }
         return product;
       });
+      console.log(updatedProducts);
       return {
         ...state,
-        products: updatedProducts,
+        products: [...updatedProducts],
         isLoading: false,
       };
 

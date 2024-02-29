@@ -29,8 +29,8 @@ function CartPage() {
   return (
     <div className={cx("Wrapper")}>
       <div className={cx("container")}>
-        <Card name={"Our Product"} data={shoes} />
-        <Card name={"Your Cart"} isCart={true} data={cartItems} />
+        <Card name={"Our Product"} data={shoes} inCart={shoes.inCart} />
+        <Card name={"Your Cart"} data={cartItems} isCart={true} />
       </div>
     </div>
   );

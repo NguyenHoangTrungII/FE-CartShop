@@ -6,10 +6,10 @@ import { useDispatch } from "react-redux";
 
 const cx = classNames.bind(styles);
 
-function ProductCard({ itemData = {} }) {
+function ProductCard({ itemData = {}, inCart }) {
   const dispatch = useDispatch();
-  const [buttonActive, setButtonActive] = useState(!itemData.inCart);
-  const [isInCart, setInCart] = useState(itemData.inCart);
+  const [buttonActive, setButtonActive] = useState(!inCart);
+  // const [isInCart, setInCart] = useState(itemData.inCart);
   const productImgStyle = {
     backgroundColor: itemData.color || "rgb(212, 215, 214)",
   };
