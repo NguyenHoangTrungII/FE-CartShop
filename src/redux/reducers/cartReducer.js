@@ -78,11 +78,8 @@ export const cartReducer = (state = initialState, action) => {
       };
 
     case UPDATE_CART: {
-      console.log(cartList);
-      console.log(action);
       const cartItemId = action.carts._id;
       const index = findIndex(cartList, cartItemId);
-      console.log("index", index);
       cartList[index].quantity = action.carts.quantity;
 
       console.log(state.cartItems);

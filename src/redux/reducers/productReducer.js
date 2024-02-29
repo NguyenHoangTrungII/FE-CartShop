@@ -2,30 +2,11 @@ import {
   FETCH_PRODUCTS,
   PRODUCT_LOADING,
   PRODUCT_FAILURE,
-  FETCH_CATEGORY,
-  FETCH_CATEGORYLIST,
-  FETCH_PRODUCTBYNAME,
-  FETCH_PRODUCTSBYID,
-  FETCH_PRODUCTFILTER,
   SET_STATUS,
 } from "../actions/productAction";
 
 const initialState = {
   products: [],
-  categories: [],
-  categorieslist: [],
-  productsbyname: [],
-  productsbyID: [],
-  productFilter: {
-    data: [],
-    pageIndex: 0,
-    totalPage: 0,
-    totalRecord: 0,
-    totalRecordAll: 0,
-  },
-  isFirstOpen: false,
-  isLoading: false,
-  isLoadingSearch: false,
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -49,16 +30,15 @@ export const productReducer = (state = initialState, action) => {
         isLoading: false,
       };
     case SET_STATUS:
-      const updatedProducts = state.products.map((product) => {
+      state.products.forEach((product) => {
         if (product._id === action.id) {
-          return { ...product, inCart: action.status };
+          product.inCart = action.status;
         }
-        return product;
       });
-      console.log(updatedProducts);
+
       return {
         ...state,
-        products: [...updatedProducts],
+        products: [...state.products],
         isLoading: false,
       };
 

@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 
 function ProductCard({ itemData = {}, inCart }) {
   const dispatch = useDispatch();
-  const [buttonActive, setButtonActive] = useState(!inCart);
+  //const [buttonActive, setButtonActive] = useState(!inCart);
   // const [isInCart, setInCart] = useState(itemData.inCart);
   const productImgStyle = {
     backgroundColor: itemData.color || "rgb(212, 215, 214)",
@@ -24,12 +24,12 @@ function ProductCard({ itemData = {}, inCart }) {
 
   const handleAddToCart = (itemData) => {
     fetching(itemData);
-    handleClickOn();
+    //handleClickOn();
   };
 
-  const handleClickOn = () => {
-    setButtonActive(!buttonActive);
-  };
+  // const handleClickOn = () => {
+  //   setButtonActive(inCart);
+  // };
 
   return (
     <div className={cx("wrapper")}>
@@ -43,10 +43,10 @@ function ProductCard({ itemData = {}, inCart }) {
         <label>${itemData.price}</label>
         <div className={cx("addToCard-button")}>
           <div
-            className={cx("button", buttonActive ? " " : "inactive")}
+            className={cx("button", !inCart ? " " : "inactive")}
             onClick={() => handleAddToCart(itemData)}
           >
-            {buttonActive ? (
+            {!inCart ? (
               "ADD TO CART"
             ) : (
               <img src={require("../../assets/icons/check.png")} />
