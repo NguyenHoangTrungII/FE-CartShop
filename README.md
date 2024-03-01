@@ -32,8 +32,7 @@ npm start
 
   
 ## Technical details
-
-
+- ReactJS. Redux
 ## Demo
 
 ``` bash
